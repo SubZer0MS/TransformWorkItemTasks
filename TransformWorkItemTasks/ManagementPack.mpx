@@ -1,0 +1,36 @@
+﻿<ManagementPackFragment SchemaVersion="SM2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Categories>
+    <Category ID="Category.MP.TransformWorkItemTasks" Value="Console!Microsoft.EnterpriseManagement.ServiceManager.ManagementPack">
+      <ManagementPackName>TransformWorkItemTasks</ManagementPackName>
+      <ManagementPackVersion>1.0.0.0</ManagementPackVersion>
+      <ManagementPackPublicKeyToken>9396306c2be7fcc4</ManagementPackPublicKeyToken>
+    </Category>
+    <!--<Category ID="Category.MY_CUSTOM_IMAGE_NAME" Target="MY_CUSTOM_IMAGE_NAME" Value="System!System.Internal.ManagementPack.Images.u16x16Icon" />-->
+  </Categories>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="TransformWorkItemTasks">
+          <Name>TransformWorkItemTasks</Name>
+          <Description>TransformWorkItemTasks</Description>
+        </DisplayString>
+        <DisplayString ElementID="TransformIncidentToServiceRequest">
+          <Name>Transform into SR</Name>
+        </DisplayString>
+        <DisplayString ElementID="TransformIncidentToChangeRequest">
+          <Name>Transform into CR</Name>
+        </DisplayString>
+        <DisplayString ElementID="TransformIncidentToProblem">
+          <Name>Transform into PR</Name>
+        </DisplayString>
+        <DisplayString ElementID="TransformIncidentToReleaseRecord">
+          <Name>Transform into RR</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+  <Resources>
+    <Assembly ID="Assembly.CustomTransformWorkItemTasks" Accessibility="Public" FileName="CustomTransformWorkItemTasks.dll" HasNullStream="false" QualifiedName="CustomTransformWorkItemTasks, Version=1.0.0.0" />
+    <!--<Image ID="MY_CUSTOM_IMAGE_NAME" Accessibility="Public" HasNullStream="false" FileName="MY_CUSTOM_ICON.png" />-->
+  </Resources>
+</ManagementPackFragment>

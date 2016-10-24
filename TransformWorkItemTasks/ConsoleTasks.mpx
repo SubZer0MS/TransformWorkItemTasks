@@ -1,0 +1,54 @@
+﻿<ManagementPackFragment SchemaVersion="SM2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Categories>
+    <Category ID="Category.TransformIncidentToServiceRequest" Target="TransformIncidentToServiceRequest" Value="Console!Microsoft.EnterpriseManagement.ServiceManager.UI.Console.MultiSelectTask" />
+    <Category ID="Category.TransformIncidentToChangeRequest" Target="TransformIncidentToChangeRequest" Value="Console!Microsoft.EnterpriseManagement.ServiceManager.UI.Console.MultiSelectTask" />
+    <Category ID="Category.TransformIncidentToProblem" Target="TransformIncidentToProblem" Value="Console!Microsoft.EnterpriseManagement.ServiceManager.UI.Console.MultiSelectTask" />
+    <Category ID="Category.TransformIncidentToReleaseRecord" Target="TransformIncidentToReleaseRecord" Value="Console!Microsoft.EnterpriseManagement.ServiceManager.UI.Console.MultiSelectTask" />
+  </Categories>
+  <Presentation>
+    <ConsoleTasks>
+      <ConsoleTask ID="TransformIncidentToServiceRequest" Accessibility="Public" Enabled="true" Target="Incident!System.WorkItem.Incident" RequireOutput="false">
+        <Assembly>Console!SdkDataAccessAssembly</Assembly>
+        <Handler>Microsoft.EnterpriseManagement.UI.SdkDataAccess.ConsoleTaskHandler</Handler>
+        <Parameters>
+          <Argument Name="Assembly">CustomTransformWorkItemTasks</Argument>
+          <Argument Name="Type">CustomTransformWorkItemTasks.TransformTaskHandler</Argument>
+          <Argument>Service</Argument>
+        </Parameters>
+      </ConsoleTask>
+      <ConsoleTask ID="TransformIncidentToChangeRequest" Accessibility="Public" Enabled="true" Target="Incident!System.WorkItem.Incident" RequireOutput="false">
+        <Assembly>Console!SdkDataAccessAssembly</Assembly>
+        <Handler>Microsoft.EnterpriseManagement.UI.SdkDataAccess.ConsoleTaskHandler</Handler>
+        <Parameters>
+          <Argument Name="Assembly">CustomTransformWorkItemTasks</Argument>
+          <Argument Name="Type">CustomTransformWorkItemTasks.TransformTaskHandler</Argument>
+          <Argument>Change</Argument>
+        </Parameters>
+      </ConsoleTask>
+      <ConsoleTask ID="TransformIncidentToProblem" Accessibility="Public" Enabled="true" Target="Incident!System.WorkItem.Incident" RequireOutput="false">
+        <Assembly>Console!SdkDataAccessAssembly</Assembly>
+        <Handler>Microsoft.EnterpriseManagement.UI.SdkDataAccess.ConsoleTaskHandler</Handler>
+        <Parameters>
+          <Argument Name="Assembly">CustomTransformWorkItemTasks</Argument>
+          <Argument Name="Type">CustomTransformWorkItemTasks.TransformTaskHandler</Argument>
+          <Argument>Problem</Argument>
+        </Parameters>
+      </ConsoleTask>
+      <ConsoleTask ID="TransformIncidentToReleaseRecord" Accessibility="Public" Enabled="true" Target="Incident!System.WorkItem.Incident" RequireOutput="false">
+        <Assembly>Console!SdkDataAccessAssembly</Assembly>
+        <Handler>Microsoft.EnterpriseManagement.UI.SdkDataAccess.ConsoleTaskHandler</Handler>
+        <Parameters>
+          <Argument Name="Assembly">CustomTransformWorkItemTasks</Argument>
+          <Argument Name="Type">CustomTransformWorkItemTasks.TransformTaskHandler</Argument>
+          <Argument>Release</Argument>
+        </Parameters>
+      </ConsoleTask>
+    </ConsoleTasks>
+    <ImageReferences>
+      <ImageReference ElementID="TransformIncidentToServiceRequest" ImageID="ServiceLib!ServiceManager.ServiceRequest.Library.Image.ServiceRequest_16" />
+      <ImageReference ElementID="TransformIncidentToChangeRequest" ImageID="ChangeLib!ChangeMgmt_AllChangeRequests_16" />
+      <ImageReference ElementID="TransformIncidentToProblem" ImageID="ProblemLib!ServiceManager.ProblemManagement.Library.Image.Problem" />
+      <ImageReference ElementID="TransformIncidentToReleaseRecord" ImageID="ReleaseLib!Wunderbar_ReleaseManagement_16" />
+    </ImageReferences>
+  </Presentation>
+</ManagementPackFragment>
