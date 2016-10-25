@@ -27,12 +27,6 @@ namespace CustomTransformWorkItemTasks
             ManagementPackEnumerationCriteria incidentClosedEnumCriteria = new ManagementPackEnumerationCriteria(string.Format("Name = '{0}'", EnumTypes.incidentStatusClosed));
             ManagementPackEnumeration incidentClosedStatus = emg.EntityTypes.GetEnumerations(incidentClosedEnumCriteria).FirstOrDefault();
             ManagementPackTypeProjection incidentProjection = emg.EntityTypes.GetTypeProjection(TypeProjections.incidentProjectionAdvancedName, incidentSettingsMp);
-            
-            ManagementPackRelationship createdByRelationshipClass = emg.EntityTypes.GetRelationshipClass(RelationshipTypes.createdByUserRelationshipClassName, wiLibraryMp);
-            ManagementPackRelationship affectedUserRelationshipClass = emg.EntityTypes.GetRelationshipClass(RelationshipTypes.affectedUserRelationshipClassName, wiLibraryMp);
-            ManagementPackRelationship assignedToRelationshipClass = emg.EntityTypes.GetRelationshipClass(RelationshipTypes.assignedToUserRelationshipClassName, wiLibraryMp);
-            ManagementPackRelationship incidentHasAnalystCommentRelationshipClass = emg.EntityTypes.GetRelationshipClass(RelationshipTypes.analystCommentToIncidentRelationshipClassName, wiLibraryMp);
-            ManagementPackRelationship workItemToWorkItemRelationshipClass = emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemRelatesToWorkItemRelationshipClassName, wiLibraryMp);
 
             string workItemClassName = string.Empty;
             string workItemMpName = string.Empty;
@@ -117,22 +111,8 @@ namespace CustomTransformWorkItemTasks
                     workItem.Object[workItemClass, WorkItemProperties.workItemIdPropertyName].Value = generalSetting[workItemClassSetting, workItemSettingPrefixName] + Constants.workItemPrefixPattern;
                     workItem.Object[workItemClass, WorkItemProperties.workItemTitlePropertyName].Value = string.Format("{0} ({1})", incident.Object[incidentClass, WorkItemProperties.workItemTitlePropertyName].Value, incident.Object[incidentClass, WorkItemProperties.workItemIdPropertyName].Value);
                     workItem.Object[workItemClass, WorkItemProperties.workItemDescriptionPropertyName].Value = incident.Object[incidentClass, WorkItemProperties.workItemDescriptionPropertyName].Value;
-                    
-                    if(incident[createdByRelationshipClass.Target].Any())
-                    {
-                        workItem.Add(incident[createdByRelationshipClass.Target].FirstOrDefault().Object, createdByRelationshipClass.Target);
-                    }
 
-                    if (incident[affectedUserRelationshipClass.Target].Any())
-                    {
-                        workItem.Add(incident[affectedUserRelationshipClass.Target].FirstOrDefault().Object, affectedUserRelationshipClass.Target);
-                    }
-
-                    if (incident[assignedToRelationshipClass.Target].Any())
-                    {
-                        workItem.Add(incident[assignedToRelationshipClass.Target].FirstOrDefault().Object, assignedToRelationshipClass.Target);
-                    }
-
+                    ManagementPackRelationship workItemToWorkItemRelationshipClass = emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemRelatesToWorkItemRelationshipClassName, wiLibraryMp);
                     workItem.Add(incident.Object, workItemToWorkItemRelationshipClass.Target);
 
                     CreatableEnterpriseManagementObject analystComment = new CreatableEnterpriseManagementObject(emg, analystCommentClass);
@@ -141,21 +121,56 @@ namespace CustomTransformWorkItemTasks
                     analystComment[analystCommentClass, AnalystCommentProperties.analystCommentPropertyEnteredBy].Value = EnterpriseManagementGroup.CurrentUserName;
                     analystComment[analystCommentClass, AnalystCommentProperties.analystCommentPropertyEnteredDate].Value = DateTime.Now.ToUniversalTime();
 
-                    incident.Add(analystComment, incidentHasAnalystCommentRelationshipClass.Target);
-
                     incident.Object[incidentClass, IncidentProperties.incidentPropertyStatus].Value = incidentClosedStatus.Id;
                     incident.Object[incidentClass, IncidentProperties.incidentPropertyClosedDate].Value = DateTime.Now.ToUniversalTime();
+
+                    ManagementPackRelationship incidentHasAnalystCommentRelationshipClass = emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemHasAnalystCommentRelationshipClassName, wiLibraryMp);
+                    incident.Add(analystComment, incidentHasAnalystCommentRelationshipClass.Target);
+
+                    IList<ManagementPackRelationship> relationshipsToAddList = new List<ManagementPackRelationship>()
+                    {
+                        workItemToWorkItemRelationshipClass,
+                        emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemHasCommentLog, wiLibraryMp),
+                        emg.EntityTypes.GetRelationshipClass(RelationshipTypes.createdByUserRelationshipClassName, wiLibraryMp),
+                        emg.EntityTypes.GetRelationshipClass(RelationshipTypes.affectedUserRelationshipClassName, wiLibraryMp),
+                        emg.EntityTypes.GetRelationshipClass(RelationshipTypes.assignedToUserRelationshipClassName, wiLibraryMp),
+                        emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemHasAttachment, wiLibraryMp),
+                        emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemAboutConfigItem, wiLibraryMp),
+                        emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemRelatesToConfigItem, wiLibraryMp)
+                    };
+
+                    foreach (ManagementPackRelationship relationship in relationshipsToAddList)
+                    {
+                        if (incident[relationship.Target].Any())
+                        {
+                            foreach (IComposableProjection itemProjection in incident[relationship.Target])
+                            {
+                                workItem.Add(itemProjection.Object, relationship.Target);
+                                itemProjection.Remove();
+                            }
+                        }
+                    }
+
+                    incident.Overwrite();
 
                     try
                     {
                         workItem.Overwrite();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
+                        ManagementPackEnumerationCriteria incidentActiveEnumCriteria = new ManagementPackEnumerationCriteria(string.Format("Name = '{0}'", EnumTypes.incidentStatusActive));
+                        ManagementPackEnumeration incidentCActiveStatus = emg.EntityTypes.GetEnumerations(incidentActiveEnumCriteria).FirstOrDefault();
+
+                        incident.Object[incidentClass, IncidentProperties.incidentPropertyStatus].Value = incidentCActiveStatus.Id;
+                        incident.Object[incidentClass, IncidentProperties.incidentPropertyClosedDate].Value = null;
+
+                        incident.Overwrite();
+
                         throw ex;
                     }
 
-                    incident.Overwrite();
+                    
                 }
 
                 RequestViewRefresh();

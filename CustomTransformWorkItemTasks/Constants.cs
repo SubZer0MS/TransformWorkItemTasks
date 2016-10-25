@@ -58,6 +58,7 @@ namespace CustomTransformWorkItemTasks
     class EnumTypes
     {
         public static readonly string incidentStatusClosed = "IncidentStatusEnum.Closed";
+        public static readonly string incidentStatusActive = "IncidentStatusEnum.Active";
     }
 
     class ClassTypes
@@ -76,8 +77,13 @@ namespace CustomTransformWorkItemTasks
         public static readonly string affectedUserRelationshipClassName = "System.WorkItemAffectedUser";
         public static readonly string createdByUserRelationshipClassName = "System.WorkItemCreatedByUser";
         public static readonly string assignedToUserRelationshipClassName = "System.WorkItemAssignedToUser";
-        public static readonly string analystCommentToIncidentRelationshipClassName = "System.WorkItem.TroubleTicketHasAnalystComment";
+        public static readonly string workItemHasAnalystCommentRelationshipClassName = "System.WorkItem.TroubleTicketHasAnalystComment";
+        public static readonly string workItemHasUserCommentRelationshipClassName = "System.WorkItem.TroubleTicketHasUserComment";
         public static readonly string workItemRelatesToWorkItemRelationshipClassName = "System.WorkItemRelatesToWorkItem";
+        public static readonly string workItemHasAttachment = "System.WorkItemHasFileAttachment";
+        public static readonly string workItemAboutConfigItem = "System.WorkItemAboutConfigItem";
+        public static readonly string workItemRelatesToConfigItem = "System.WorkItemRelatesToConfigItem";
+        public static readonly string workItemHasCommentLog = "System.WorkItemHasCommentLog";
     }
 
     class WorkItemTemplates
