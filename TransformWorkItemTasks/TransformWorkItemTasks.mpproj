@@ -18,7 +18,7 @@
     <Company>BNR</Company>
     <Copyright>Copyright (c) MyCompany. All rights reserved.</Copyright>
     <DelaySigning>False</DelaySigning>
-    <AssemblyOriginatorKeyFile>C:\Users\Administrator.CONTOSO\Documents\Visual Studio 2015\Projects\TransformWorkItemTasks\TransformWorkItemTasks\SealKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\TransformWorkItemTasks\SealKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>false</DebugSymbols>
@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ManagementPackReference Include="Microsoft.EnterpriseManagement.ServiceManager.UI.Console">
-      <HintPath>C:\Users\Administrator.CONTOSO\Documents\Visual Studio 2015\Projects\TransformWorkItemTasks\TransformWorkItemTasks\References\Microsoft.EnterpriseManagement.ServiceManager.UI.Console.mp</HintPath>
+      <HintPath>..\TransformWorkItemTasks\References\Microsoft.EnterpriseManagement.ServiceManager.UI.Console.mp</HintPath>
       <Alias>Console</Alias>
       <MinVersion>7.5.3079.0</MinVersion>
       <PackageToBundle>False</PackageToBundle>
@@ -41,31 +41,31 @@
       <PackageToBundle>false</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="ServiceManager.ChangeManagement.Library">
-      <HintPath>C:\Users\Administrator.CONTOSO\Desktop\TransformWorkItemTasks\TransformWorkItemTasks\References\ServiceManager.ChangeManagement.Library.mp</HintPath>
+      <HintPath>..\TransformWorkItemTasks\References\ServiceManager.ChangeManagement.Library.mp</HintPath>
       <Alias>ChangeLib</Alias>
       <MinVersion>7.5.3079.0</MinVersion>
       <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="ServiceManager.IncidentManagement.Library">
-      <HintPath>C:\Users\Administrator.CONTOSO\Desktop\TransformWorkItemTasks\TransformWorkItemTasks\References\ServiceManager.IncidentManagement.Library.mp</HintPath>
+      <HintPath>..\TransformWorkItemTasks\References\ServiceManager.IncidentManagement.Library.mp</HintPath>
       <Alias>IncidentLib</Alias>
       <MinVersion>7.5.3079.0</MinVersion>
       <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="ServiceManager.ProblemManagement.Library">
-      <HintPath>C:\Users\Administrator.CONTOSO\Desktop\TransformWorkItemTasks\TransformWorkItemTasks\References\ServiceManager.ProblemManagement.Library.mp</HintPath>
+      <HintPath>..\TransformWorkItemTasks\References\ServiceManager.ProblemManagement.Library.mp</HintPath>
       <Alias>ProblemLib</Alias>
       <MinVersion>7.5.3079.0</MinVersion>
       <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="ServiceManager.ReleaseManagement.Library">
-      <HintPath>C:\Users\Administrator.CONTOSO\Desktop\TransformWorkItemTasks\TransformWorkItemTasks\References\ServiceManager.ReleaseManagement.Library.mp</HintPath>
+      <HintPath>..\TransformWorkItemTasks\References\ServiceManager.ReleaseManagement.Library.mp</HintPath>
       <Alias>ReleaseLib</Alias>
       <MinVersion>7.5.3079.0</MinVersion>
       <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="ServiceManager.ServiceRequest.Library">
-      <HintPath>C:\Users\Administrator.CONTOSO\Desktop\TransformWorkItemTasks\TransformWorkItemTasks\References\ServiceManager.ServiceRequest.Library.mp</HintPath>
+      <HintPath>..\TransformWorkItemTasks\References\ServiceManager.ServiceRequest.Library.mp</HintPath>
       <Alias>ServiceLib</Alias>
       <MinVersion>7.5.3079.0</MinVersion>
       <PackageToBundle>False</PackageToBundle>
@@ -75,7 +75,7 @@
       <PackageToBundle>false</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="System.WorkItem.Incident.Library">
-      <HintPath>C:\Users\Administrator.CONTOSO\Documents\Visual Studio 2015\Projects\TransformWorkItemTasks\TransformWorkItemTasks\References\System.WorkItem.Incident.Library.mp</HintPath>
+      <HintPath>..\TransformWorkItemTasks\References\System.WorkItem.Incident.Library.mp</HintPath>
       <Alias>Incident</Alias>
       <MinVersion>7.5.3079.0</MinVersion>
       <PackageToBundle>False</PackageToBundle>
