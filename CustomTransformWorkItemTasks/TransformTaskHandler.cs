@@ -160,9 +160,9 @@ namespace CustomTransformWorkItemTasks
                     catch (Exception ex)
                     {
                         ManagementPackEnumerationCriteria incidentActiveEnumCriteria = new ManagementPackEnumerationCriteria(string.Format("Name = '{0}'", EnumTypes.incidentStatusActive));
-                        ManagementPackEnumeration incidentCActiveStatus = emg.EntityTypes.GetEnumerations(incidentActiveEnumCriteria).FirstOrDefault();
+                        ManagementPackEnumeration incidentActiveStatus = emg.EntityTypes.GetEnumerations(incidentActiveEnumCriteria).FirstOrDefault();
 
-                        incident.Object[incidentClass, IncidentProperties.incidentPropertyStatus].Value = incidentCActiveStatus.Id;
+                        incident.Object[incidentClass, IncidentProperties.incidentPropertyStatus].Value = incidentActiveStatus.Id;
                         incident.Object[incidentClass, IncidentProperties.incidentPropertyClosedDate].Value = null;
 
                         incident.Overwrite();
