@@ -180,8 +180,6 @@ namespace CustomTransformWorkItemTasks
 
                         throw ex;
                     }
-
-                    
                 }
 
                 RequestViewRefresh();
