@@ -13,46 +13,46 @@ namespace CustomTransformWorkItemTasks
 
     class TaskActions
     {
-        public static readonly string taskActionService = "Service";
-        public static readonly string taskActionChange = "Change";
-        public static readonly string taskActionProblem = "Problem";
-        public static readonly string taskActionRelease = "Release";
+        public static readonly string Service = "Service";
+        public static readonly string Change = "Change";
+        public static readonly string Problem = "Problem";
+        public static readonly string Release = "Release";
     }
 
     class WorkItemProperties
     {
-        public static readonly string workItemIdPropertyName = "Id";
-        public static readonly string workItemTitlePropertyName = "Title";
-        public static readonly string workItemDescriptionPropertyName = "Description";
+        public static readonly string Id = "Id";
+        public static readonly string Title = "Title";
+        public static readonly string Description = "Description";
     }
 
     class IncidentProperties
     {
-        public static readonly string incidentPropertyStatus = "Status";
-        public static readonly string incidentPropertyClosedDate = "ClosedDate";
+        public static readonly string Status = "Status";
+        public static readonly string ClosedDate = "ClosedDate";
     }
 
     class AnalystCommentProperties
     {
-        public static readonly string analystCommentPropertyId = "Id";
-        public static readonly string analystCommentPropertyComment = "Comment";
-        public static readonly string analystCommentPropertyEnteredBy = "EnteredBy";
-        public static readonly string analystCommentPropertyEnteredDate = "EnteredDate";
+        public static readonly string Id = "Id";
+        public static readonly string Comment = "Comment";
+        public static readonly string EnteredBy = "EnteredBy";
+        public static readonly string EnteredDate = "EnteredDate";
     }
 
     class ManagementPacks
     {
-        public static readonly string workItemLibraryMPName = "System.WorkItem.Library";
-        public static readonly string incidentMPName = "System.WorkItem.Incident.Library";
-        public static readonly string serviceMPName = "System.WorkItem.ServiceRequest.Library";
-        public static readonly string problemMPName = "System.WorkItem.Problem.Library";
-        public static readonly string releaseMPName = "System.WorkItem.ReleaseRecord.Library";
-        public static readonly string changeMPName = "System.WorkItem.ChangeRequest.Library";
-        public static readonly string incidentSettingsMPName = "ServiceManager.IncidentManagement.Library";
-        public static readonly string serviceSettingsMPName = "ServiceManager.ServiceRequest.Library";
-        public static readonly string problemSettingsMPName = "System.WorkItem.Problem.Library";
-        public static readonly string releaseSettingsMPName = "ServiceManager.ReleaseManagement.Library";
-        public static readonly string changeSettingsMPName = "ServiceManager.ChangeManagement.Library";
+        public static readonly string workItemLibrary = "System.WorkItem.Library";
+        public static readonly string incidentLibrary = "System.WorkItem.Incident.Library";
+        public static readonly string serviceLibrary = "System.WorkItem.ServiceRequest.Library";
+        public static readonly string problemLibrary = "System.WorkItem.Problem.Library";
+        public static readonly string releaseLibrary = "System.WorkItem.ReleaseRecord.Library";
+        public static readonly string changeLibrary = "System.WorkItem.ChangeRequest.Library";
+        public static readonly string incidentManagementLibrary = "ServiceManager.IncidentManagement.Library";
+        public static readonly string serviceManagementLibrary = "ServiceManager.ServiceRequest.Library";
+        public static readonly string releaseManagementLibrary = "ServiceManager.ReleaseManagement.Library";
+        public static readonly string changeManagementLibrary = "ServiceManager.ChangeManagement.Library";
+        public static readonly string knowledgeLibrary = "System.Knowledge.Library";
     }
 
     class EnumTypes
@@ -63,58 +63,59 @@ namespace CustomTransformWorkItemTasks
 
     class ClassTypes
     {
-        public static readonly string workItemClassName = "System.WorkItem";
-        public static readonly string incidentWiClassName = "System.WorkItem.Incident";
-        public static readonly string serviceWiClassName = "System.WorkItem.ServiceRequest";
-        public static readonly string problemWiClassName = "System.WorkItem.Problem";
-        public static readonly string releaseWiClassName = "System.WorkItem.ReleaseRecord";
-        public static readonly string changeWiClassName = "System.WorkItem.ChangeRequest";
-        public static readonly string analystCommentLogClassName = "System.WorkItem.TroubleTicket.AnalystCommentLog";
+        public static readonly string workItem = "System.WorkItem";
+        public static readonly string incident = "System.WorkItem.Incident";
+        public static readonly string service = "System.WorkItem.ServiceRequest";
+        public static readonly string problem = "System.WorkItem.Problem";
+        public static readonly string release = "System.WorkItem.ReleaseRecord";
+        public static readonly string change = "System.WorkItem.ChangeRequest";
+        public static readonly string analystCommentLog = "System.WorkItem.TroubleTicket.AnalystCommentLog";
     }
 
     class RelationshipTypes
     {
-        public static readonly string affectedUserRelationshipClassName = "System.WorkItemAffectedUser";
-        public static readonly string createdByUserRelationshipClassName = "System.WorkItemCreatedByUser";
-        public static readonly string assignedToUserRelationshipClassName = "System.WorkItemAssignedToUser";
-        public static readonly string workItemHasAnalystCommentRelationshipClassName = "System.WorkItem.TroubleTicketHasAnalystComment";
-        public static readonly string workItemHasUserCommentRelationshipClassName = "System.WorkItem.TroubleTicketHasUserComment";
-        public static readonly string workItemRelatesToWorkItemRelationshipClassName = "System.WorkItemRelatesToWorkItem";
+        public static readonly string affectedUser = "System.WorkItemAffectedUser";
+        public static readonly string createdByUser = "System.WorkItemCreatedByUser";
+        public static readonly string assignedToUser = "System.WorkItemAssignedToUser";
+        public static readonly string workItemHasAnalystComment = "System.WorkItem.TroubleTicketHasAnalystComment";
+        public static readonly string workItemHasUserComment = "System.WorkItem.TroubleTicketHasUserComment";
+        public static readonly string workItemRelatesToWorkItem = "System.WorkItemRelatesToWorkItem";
         public static readonly string workItemHasAttachment = "System.WorkItemHasFileAttachment";
         public static readonly string workItemAboutConfigItem = "System.WorkItemAboutConfigItem";
         public static readonly string workItemRelatesToConfigItem = "System.WorkItemRelatesToConfigItem";
         public static readonly string workItemHasCommentLog = "System.WorkItemHasCommentLog";
+        public static readonly string entityToArticle = "System.EntityLinksToKnowledgeDocument";
     }
 
     class WorkItemTemplates
     {
-        public static readonly string incidentClassTemplate = "DefaultIncidentTemplate";
-        public static readonly string serviceClassTemplate = "ServiceManager.ServiceRequest.Library.Template.DefaultServiceRequest";
-        public static readonly string problemClassTemplate = "";
-        public static readonly string releaseClassTemplate = "DefaultReleaseRecord";
-        public static readonly string changeClassTemplate = "StandardChangeRequest";
+        public static readonly string incident = "DefaultIncidentTemplate";
+        public static readonly string service = "ServiceManager.ServiceRequest.Library.Template.DefaultServiceRequest";
+        public static readonly string problem = "";
+        public static readonly string release = "DefaultReleaseRecord";
+        public static readonly string change = "StandardChangeRequest";
     }
 
     class WorkItemSettings
     {
-        public static readonly string incidentWiClassSettingName = "System.WorkItem.Incident.GeneralSetting";
-        public static readonly string serviceWiClassSettingName = "System.GlobalSetting.ServiceRequestSettings";
-        public static readonly string problemWiClassSettingName = "System.GlobalSetting.ProblemSettings";
-        public static readonly string releaseWiClassSettingName = "System.GlobalSetting.ReleaseSettings";
-        public static readonly string changeWiClassSettingName = "System.GlobalSetting.ChangeSettings";
+        public static readonly string incident = "System.WorkItem.Incident.GeneralSetting";
+        public static readonly string service = "System.GlobalSetting.ServiceRequestSettings";
+        public static readonly string problem = "System.GlobalSetting.ProblemSettings";
+        public static readonly string release = "System.GlobalSetting.ReleaseSettings";
+        public static readonly string change = "System.GlobalSetting.ChangeSettings";
     }
 
     class WorkItemPrefixes
     {
-        public static readonly string incidentWiClassSettingPrefixName = "PrefixForId";
-        public static readonly string serviceWiClassSettingPrefixName = "ServiceRequestPrefix";
-        public static readonly string problemWiClassSettingPrefixName = "ProblemIdPrefix";
-        public static readonly string releaseWiClassSettingPrefixName = "SystemWorkItemReleaseRecordIdPrefix";
-        public static readonly string changeWiClassSettingPrefixName = "SystemWorkItemChangeRequestIdPrefix";
+        public static readonly string incident = "PrefixForId";
+        public static readonly string service = "ServiceRequestPrefix";
+        public static readonly string problem = "ProblemIdPrefix";
+        public static readonly string release = "SystemWorkItemReleaseRecordIdPrefix";
+        public static readonly string change = "SystemWorkItemChangeRequestIdPrefix";
     }
 
     class TypeProjections
     {
-        public static readonly string incidentProjectionAdvancedName = "System.WorkItem.Incident.ProjectionType";
+        public static readonly string incidentAdvanced = "System.WorkItem.Incident.ProjectionType";
     }
 }
