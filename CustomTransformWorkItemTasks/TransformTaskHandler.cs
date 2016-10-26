@@ -149,6 +149,15 @@ namespace CustomTransformWorkItemTasks
                                 itemProjection.Remove();
                             }
                         }
+
+                        if(incident[relationship.Source].Any())
+                        {
+                            foreach (IComposableProjection itemProjection in incident[relationship.Source])
+                            {
+                                workItem.Add(itemProjection.Object, relationship.Source);
+                                itemProjection.Remove();
+                            }
+                        }
                     }
 
                     incident.Overwrite();
