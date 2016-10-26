@@ -7,7 +7,7 @@ using Microsoft.EnterpriseManagement.Common;
 using Microsoft.EnterpriseManagement.ConsoleFramework;
 using Microsoft.EnterpriseManagement.UI.SdkDataAccess;
 using Microsoft.EnterpriseManagement.Configuration;
-using Conn = Microsoft.EnterpriseManagement.UI.Core.Connection;
+using ConsoleSdkConnection = Microsoft.EnterpriseManagement.UI.Core.Connection;
 
 namespace CustomTransformWorkItemTasks
 {
@@ -15,7 +15,7 @@ namespace CustomTransformWorkItemTasks
     {
         public override void ExecuteCommand(IList<NavigationModelNodeBase> nodes, NavigationModelNodeTask task, ICollection<string> parameters)
         {
-            Conn.IManagementGroupSession session = FrameworkServices.GetService<Conn.IManagementGroupSession>();
+            ConsoleSdkConnection.IManagementGroupSession session = FrameworkServices.GetService<ConsoleSdkConnection.IManagementGroupSession>();
             EnterpriseManagementGroup emg = session.ManagementGroup;
 
             ManagementPack incidentMp = emg.GetManagementPack(ManagementPacks.incidentMPName, Constants.mpKeyTocken, Constants.mpSMR2Version);
