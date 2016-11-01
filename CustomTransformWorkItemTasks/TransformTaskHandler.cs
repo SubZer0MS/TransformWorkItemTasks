@@ -21,6 +21,7 @@ namespace CustomTransformWorkItemTasks
             ManagementPack incidentMp = emg.GetManagementPack(ManagementPacks.incidentLibrary, Constants.mpKeyTocken, Constants.mpSMR2Version);
             ManagementPack wiLibraryMp = emg.GetManagementPack(ManagementPacks.workItemLibrary, Constants.mpKeyTocken, Constants.mpSMR2Version);
             ManagementPack incidentSettingsMp = emg.GetManagementPack(ManagementPacks.incidentManagementLibrary, Constants.mpKeyTocken, Constants.mpSMR2Version);
+            ManagementPack activityLibMp = emg.GetManagementPack(ManagementPacks.activityLibrary, Constants.mpKeyTocken, Constants.mpSMR2Version);
 
             ManagementPackClass incidentClass = emg.EntityTypes.GetClass(ClassTypes.incident, incidentMp);
             ManagementPackClass analystCommentClass = emg.EntityTypes.GetClass(ClassTypes.analystCommentLog, wiLibraryMp);
@@ -28,12 +29,23 @@ namespace CustomTransformWorkItemTasks
             ManagementPackEnumeration incidentClosedStatus = emg.EntityTypes.GetEnumerations(incidentClosedEnumCriteria).FirstOrDefault();
             ManagementPackTypeProjection incidentProjection = emg.EntityTypes.GetTypeProjection(TypeProjections.incidentAdvanced, incidentSettingsMp);
 
+            IDictionary<string, string> activityPrefixMapping = new Dictionary<string, string>
+            {
+                { ActivityTypes.dependent, ActivityPrefixes.dependent },
+                { ActivityTypes.manual, ActivityPrefixes.manual },
+                { ActivityTypes.parallel, ActivityPrefixes.parallel },
+                { ActivityTypes.review, ActivityPrefixes.review },
+                { ActivityTypes.sequential, ActivityPrefixes.sequential },
+                { ActivityTypes.runbook, ActivityPrefixes.runbook }
+            };
+
             string workItemClassName = string.Empty;
             string workItemMpName = string.Empty;
             string workItemSettingClassName = string.Empty;
             string workItemSettingPrefixName = string.Empty;
             string workItemSettingMpName = string.Empty;
             string workItemTemplateName = string.Empty;
+            string workItemStatusName = string.Empty;
 
             if (parameters.Contains(TaskActions.Service))
             {
@@ -43,6 +55,7 @@ namespace CustomTransformWorkItemTasks
                 workItemSettingPrefixName = WorkItemPrefixes.service;
                 workItemSettingMpName = ManagementPacks.serviceManagementLibrary;
                 workItemTemplateName = WorkItemTemplates.service;
+                workItemStatusName = EnumTypes.serviceStatusNew;
 
             }
             else if (parameters.Contains(TaskActions.Change))
@@ -53,6 +66,7 @@ namespace CustomTransformWorkItemTasks
                 workItemSettingPrefixName = WorkItemPrefixes.change;
                 workItemSettingMpName = ManagementPacks.changeManagementLibrary;
                 workItemTemplateName = WorkItemTemplates.change;
+                workItemStatusName = EnumTypes.changeStatusNew;
             }
             else if (parameters.Contains(TaskActions.Problem))
             {
@@ -62,6 +76,7 @@ namespace CustomTransformWorkItemTasks
                 workItemSettingPrefixName = WorkItemPrefixes.problem;
                 workItemSettingMpName = ManagementPacks.problemLibrary;
                 workItemTemplateName = WorkItemTemplates.problem;
+                workItemStatusName = EnumTypes.problemStatusActive;
             }
             else if (parameters.Contains(TaskActions.Release))
             {
@@ -71,6 +86,7 @@ namespace CustomTransformWorkItemTasks
                 workItemSettingPrefixName = WorkItemPrefixes.release;
                 workItemSettingMpName = ManagementPacks.releaseManagementLibrary;
                 workItemTemplateName = WorkItemTemplates.release;
+                workItemStatusName = EnumTypes.releaseStatusNew;
             }
 
             try
@@ -81,6 +97,7 @@ namespace CustomTransformWorkItemTasks
 
                 ManagementPackClass workItemClass = emg.EntityTypes.GetClass(workItemClassName, workItemMp);
                 ManagementPackClass workItemClassSetting = emg.EntityTypes.GetClass(workItemSettingClassName, mpSettings);
+
                 EnterpriseManagementObject generalSetting = emg.EntityObjects.GetObject<EnterpriseManagementObject>(workItemClassSetting.Id, ObjectQueryOptions.Default);
 
                 foreach (NavigationModelNodeBase node in nodes)
@@ -106,12 +123,29 @@ namespace CustomTransformWorkItemTasks
                         if(template != null)
                         {
                             workItem.ApplyTemplate(template);
+
+                            ManagementPack activityManagementMp = emg.GetManagementPack(ManagementPacks.activityManagementLibrary, Constants.mpKeyTocken, Constants.mpSMR2Version);
+                            ManagementPackRelationship workItemContainsActivityRelationshipClass = emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemContainsActivity, activityLibMp);
+                            ManagementPackClass activitySettingsClass = emg.EntityTypes.GetClass(ClassTypes.activitySettings, activityManagementMp);
+
+                            EnterpriseManagementObject activitySettings = emg.EntityObjects.GetObject<EnterpriseManagementObject>(activitySettingsClass.Id, ObjectQueryOptions.Default);
+
+                            foreach (IComposableProjection activity in workItem[workItemContainsActivityRelationshipClass.Target])
+                            {
+                                ManagementPackClass activityClass = activity.Object.GetClasses(BaseClassTraversalDepth.None).FirstOrDefault();
+                                string prefix = activitySettings[null, activityPrefixMapping[activityClass.Name]].Value as string;
+                                activity.Object[null, ActivityProperties.Id].Value = string.Format("{0}{1}", prefix, Constants.workItemPrefixPattern);
+                            }
                         }
                     }
-                    
-                    workItem.Object[workItemClass, WorkItemProperties.Id].Value = generalSetting[workItemClassSetting, workItemSettingPrefixName] + Constants.workItemPrefixPattern;
+
+                    ManagementPackEnumerationCriteria workItemStatusNewEnumCriteria = new ManagementPackEnumerationCriteria(string.Format("Name = '{0}'", workItemStatusName));
+                    ManagementPackEnumeration workItemStatusNew = emg.EntityTypes.GetEnumerations(workItemStatusNewEnumCriteria).FirstOrDefault();
+
+                    workItem.Object[workItemClass, WorkItemProperties.Id].Value = string.Format("{0}{1}", generalSetting[workItemClassSetting, workItemSettingPrefixName], Constants.workItemPrefixPattern);
                     workItem.Object[workItemClass, WorkItemProperties.Title].Value = string.Format("{0} ({1})", incident.Object[incidentClass, WorkItemProperties.Title].Value, incident.Object[incidentClass, WorkItemProperties.Id].Value);
                     workItem.Object[workItemClass, WorkItemProperties.Description].Value = incident.Object[incidentClass, WorkItemProperties.Description].Value;
+                    workItem.Object[workItemClass, WorkItemProperties.Status].Value = workItemStatusNew.Id;
 
                     ManagementPackRelationship workItemToWorkItemRelationshipClass = emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemRelatesToWorkItem, wiLibraryMp);
                     workItem.Add(incident.Object, workItemToWorkItemRelationshipClass.Target);
@@ -131,15 +165,18 @@ namespace CustomTransformWorkItemTasks
                     IList<ManagementPackRelationship> relationshipsToAddList = new List<ManagementPackRelationship>()
                     {
                         workItemToWorkItemRelationshipClass,
-                        emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemHasCommentLog, wiLibraryMp),
                         emg.EntityTypes.GetRelationshipClass(RelationshipTypes.createdByUser, wiLibraryMp),
                         emg.EntityTypes.GetRelationshipClass(RelationshipTypes.affectedUser, wiLibraryMp),
                         emg.EntityTypes.GetRelationshipClass(RelationshipTypes.assignedToUser, wiLibraryMp),
                         emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemHasAttachment, wiLibraryMp),
                         emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemAboutConfigItem, wiLibraryMp),
                         emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemRelatesToConfigItem, wiLibraryMp),
-                        emg.EntityTypes.GetRelationshipClass(RelationshipTypes.entityToArticle, knowledgeLibraryMp)
+                        emg.EntityTypes.GetRelationshipClass(RelationshipTypes.entityToArticle, knowledgeLibraryMp),
+                        emg.EntityTypes.GetRelationshipClass(RelationshipTypes.workItemHasCommentLog, wiLibraryMp),
                     };
+
+                    ManagementPack systemLibraryMp = emg.GetManagementPack(ManagementPacks.systemLibrary, Constants.mpKeyTocken, Constants.mpSMR2Version);
+                    ManagementPackRelationship membershipRelationshipClass = emg.EntityTypes.GetRelationshipClass(RelationshipTypes.membership, systemLibraryMp);
 
                     foreach (ManagementPackRelationship relationship in relationshipsToAddList)
                     {
@@ -147,8 +184,23 @@ namespace CustomTransformWorkItemTasks
                         {
                             foreach (IComposableProjection itemProjection in incident[relationship.Target])
                             {
-                                workItem.Add(itemProjection.Object, relationship.Target);
-                                itemProjection.Remove();
+                                if(relationship.IsSubtypeOf(membershipRelationshipClass))
+                                {
+                                    CreatableEnterpriseManagementObject instance = new CreatableEnterpriseManagementObject(emg, itemProjection.Object.GetClasses(BaseClassTraversalDepth.None).FirstOrDefault());
+                                    foreach (ManagementPackProperty property in itemProjection.Object.GetProperties())
+                                    {
+                                        instance[property.Id].Value = itemProjection.Object[property.Id].Value;
+                                    }
+
+                                    instance[null, Constants.entityId].Value = Guid.NewGuid().ToString();
+
+                                    workItem.Add(instance, relationship.Target);
+                                }
+                                else
+                                {
+                                    workItem.Add(itemProjection.Object, relationship.Target);
+                                    itemProjection.Remove();
+                                }
                             }
                         }
 

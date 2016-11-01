@@ -4,6 +4,7 @@ namespace CustomTransformWorkItemTasks
 {
     class Constants
     {
+        public static readonly string entityId = "Id";
         public static readonly string nodePropertyId = "$Id$";
         public static readonly string workItemPrefixPattern = "{0}";
         public static readonly string mpKeyTocken = "31bf3856ad364e35";
@@ -24,6 +25,12 @@ namespace CustomTransformWorkItemTasks
         public static readonly string Id = "Id";
         public static readonly string Title = "Title";
         public static readonly string Description = "Description";
+        public static readonly string Status = "Status";
+    }
+
+    class ActivityProperties
+    {
+        public static readonly string Id = "Id";
     }
 
     class IncidentProperties
@@ -42,6 +49,7 @@ namespace CustomTransformWorkItemTasks
 
     class ManagementPacks
     {
+        public static readonly string systemLibrary = "System.Library";
         public static readonly string workItemLibrary = "System.WorkItem.Library";
         public static readonly string incidentLibrary = "System.WorkItem.Incident.Library";
         public static readonly string serviceLibrary = "System.WorkItem.ServiceRequest.Library";
@@ -53,12 +61,18 @@ namespace CustomTransformWorkItemTasks
         public static readonly string releaseManagementLibrary = "ServiceManager.ReleaseManagement.Library";
         public static readonly string changeManagementLibrary = "ServiceManager.ChangeManagement.Library";
         public static readonly string knowledgeLibrary = "System.Knowledge.Library";
+        public static readonly string activityLibrary = "System.WorkItem.Activity.Library";
+        public static readonly string activityManagementLibrary = "ServiceManager.ActivityManagement.Library";
     }
 
     class EnumTypes
     {
         public static readonly string incidentStatusClosed = "IncidentStatusEnum.Closed";
         public static readonly string incidentStatusActive = "IncidentStatusEnum.Active";
+        public static readonly string serviceStatusNew = "ServiceRequestStatusEnum.New";
+        public static readonly string changeStatusNew = "ChangeStatusEnum.New";
+        public static readonly string releaseStatusNew = "ReleaseStatusEnum.New";
+        public static readonly string problemStatusActive = "ProblemStatusEnum.Active";
     }
 
     class ClassTypes
@@ -70,6 +84,7 @@ namespace CustomTransformWorkItemTasks
         public static readonly string release = "System.WorkItem.ReleaseRecord";
         public static readonly string change = "System.WorkItem.ChangeRequest";
         public static readonly string analystCommentLog = "System.WorkItem.TroubleTicket.AnalystCommentLog";
+        public static readonly string activitySettings = "System.GlobalSetting.ActivitySettings";
     }
 
     class RelationshipTypes
@@ -85,6 +100,8 @@ namespace CustomTransformWorkItemTasks
         public static readonly string workItemRelatesToConfigItem = "System.WorkItemRelatesToConfigItem";
         public static readonly string workItemHasCommentLog = "System.WorkItemHasCommentLog";
         public static readonly string entityToArticle = "System.EntityLinksToKnowledgeDocument";
+        public static readonly string workItemContainsActivity = "System.WorkItemContainsActivity";
+        public static readonly string membership = "System.Membership";
     }
 
     class WorkItemTemplates
@@ -112,6 +129,28 @@ namespace CustomTransformWorkItemTasks
         public static readonly string problem = "ProblemIdPrefix";
         public static readonly string release = "SystemWorkItemReleaseRecordIdPrefix";
         public static readonly string change = "SystemWorkItemChangeRequestIdPrefix";
+    }
+
+    class ActivityTypes
+    {
+        public static readonly string runbook = "System.WorkItem.Activity.AutomatedActivity";
+        public static readonly string dependent = "System.WorkItem.Activity.DependentActivity";
+        public static readonly string activity = "System.WorkItem.Activity";
+        public static readonly string manual = "System.WorkItem.Activity.ManualActivity";
+        public static readonly string parallel = "System.WorkItem.Activity.ParallelActivity";
+        public static readonly string review = "System.WorkItem.Activity.ReviewActivity";
+        public static readonly string sequential = "System.WorkItem.Activity.SequentialActivity";
+    }
+
+    class ActivityPrefixes
+    {
+        public static readonly string runbook = "MicrosoftSystemCenterOrchestratorRunbookAutomationActivityBaseIdPrefix";
+        public static readonly string dependent = "SystemWorkItemActivityDependentActivityIdPrefix";
+        public static readonly string activity = "SystemWorkItemActivityIdPrefix";
+        public static readonly string manual = "SystemWorkItemActivityManualActivityIdPrefix";
+        public static readonly string parallel = "SystemWorkItemActivityParallelActivityIdPrefix";
+        public static readonly string review = "SystemWorkItemActivityReviewActivityIdPrefix";
+        public static readonly string sequential = "SystemWorkItemActivitySequentialActivityIdPrefix";
     }
 
     class TypeProjections
