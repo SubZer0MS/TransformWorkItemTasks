@@ -260,8 +260,9 @@ namespace CustomTransformWorkItemTasks
                             foreach (IComposableProjection itemProjection in incident[relationship.Target])
                             {
                                 // create a new Target class-object (CreatableEnterpriseManagementObject) and add it to the projection as it is a member of a Membership RelationshipType (as explained above)
-                                // notice that we DON'T remove such a Target class-object Relationship because it will also remove the clas-object itself (because it is a Membership RelationshipType object and it cannot exist without this Relationship)
+                                // notice that we DON'T remove such a Target class-object Relationship because it will also remove the class-object itself (because it is a Membership RelationshipType object and it cannot exist without this Relationship)
                                 // we need it to exist because we are copying data from it and it needs to still exist in the db (ex. Attachments - we still need the binary data to exist in the db when we create the new Attachment object)
+                                // we could of course delete it after we create the new WorkItem with its Relationships when calling "workItem.Overwrite()", but I chose not to do it
 
                                 if (relationship.IsSubtypeOf(membershipRelationshipClass))
                                 {
