@@ -26,6 +26,9 @@ namespace CustomTransformWorkItemTasks
         public static readonly string Title = "Title";
         public static readonly string Description = "Description";
         public static readonly string Status = "Status";
+        public static readonly string Impact = "Impact";
+        public static readonly string Urgency = "Urgency";
+        public static readonly string Category = "Classification";
     }
 
     class ActivityProperties
@@ -73,6 +76,9 @@ namespace CustomTransformWorkItemTasks
         public static readonly string changeStatusNew = "ChangeStatusEnum.New";
         public static readonly string releaseStatusNew = "ReleaseStatusEnum.New";
         public static readonly string problemStatusActive = "ProblemStatusEnum.Active";
+        public static readonly string problemUrgencyLow = "System.WorkItem.TroubleTicket.UrgencyEnum.Low";
+        public static readonly string problemImpactLow = "System.WorkItem.TroubleTicket.ImpactEnum.Low";
+        public static readonly string problemCategoryDefault = "ProblemClassificationEnum.Software";
     }
 
     class ClassTypes

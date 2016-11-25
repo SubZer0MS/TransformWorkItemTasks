@@ -62,6 +62,9 @@ namespace CustomTransformWorkItemTasks
             string workItemSettingMpName = string.Empty;
             string workItemTemplateName = string.Empty;
             string workItemStatusName = string.Empty;
+            string workItemUrgencyName = string.Empty;
+            string workItemImpactName = string.Empty;
+            string workItemCategoryName = string.Empty;
 
             // if/elseif code to set the variables that define the differences between what WorkItem type we need to create based on the parameter passed by the Task
 
@@ -95,6 +98,9 @@ namespace CustomTransformWorkItemTasks
                 workItemSettingMpName = ManagementPacks.problemLibrary;
                 workItemTemplateName = WorkItemTemplates.problem;
                 workItemStatusName = EnumTypes.problemStatusActive;
+                workItemUrgencyName = EnumTypes.problemUrgencyLow;
+                workItemImpactName = EnumTypes.problemImpactLow;
+                workItemCategoryName = EnumTypes.problemCategoryDefault;
             }
             else if (parameters.Contains(TaskActions.Release))
             {
@@ -199,6 +205,32 @@ namespace CustomTransformWorkItemTasks
                     workItem.Object[workItemClass, WorkItemProperties.Title].Value = string.Format("{0} ({1})", incident.Object[incidentClass, WorkItemProperties.Title].Value, incident.Object[incidentClass, WorkItemProperties.Id].Value);
                     workItem.Object[workItemClass, WorkItemProperties.Description].Value = incident.Object[incidentClass, WorkItemProperties.Description].Value;
                     workItem.Object[workItemClass, WorkItemProperties.Status].Value = workItemStatusNew.Id;
+
+
+                    // due to the fact that the Problem WorkItem does not have any Template we can use to create it, we need to handle this special case
+                    // we need to populate all the required fields when creating the Problem WorkItem, or creating it will fail (Urgency, Impact, Category)
+
+                    if (!string.IsNullOrEmpty(workItemUrgencyName))
+                    {
+                        ManagementPackEnumerationCriteria workItemUrgencyEnumCriteria = new ManagementPackEnumerationCriteria(string.Format("Name = '{0}'", workItemUrgencyName));
+                        ManagementPackEnumeration workItemUrgency = emg.EntityTypes.GetEnumerations(workItemUrgencyEnumCriteria).FirstOrDefault();
+                        workItem.Object[workItemClass, WorkItemProperties.Urgency].Value = workItemUrgency.Id;
+                    }
+
+                    if (!string.IsNullOrEmpty(workItemImpactName))
+                    {
+                        ManagementPackEnumerationCriteria workItemImpactEnumCriteria = new ManagementPackEnumerationCriteria(string.Format("Name = '{0}'", workItemImpactName));
+                        ManagementPackEnumeration workItemImpact = emg.EntityTypes.GetEnumerations(workItemImpactEnumCriteria).FirstOrDefault();
+                        workItem.Object[workItemClass, WorkItemProperties.Impact].Value = workItemImpact.Id;
+                    }
+
+                    if (!string.IsNullOrEmpty(workItemCategoryName))
+                    {
+                        ManagementPackEnumerationCriteria workItemCategoryEnumCriteria = new ManagementPackEnumerationCriteria(string.Format("Name = '{0}'", workItemCategoryName));
+                        ManagementPackEnumeration workItemCategory = emg.EntityTypes.GetEnumerations(workItemCategoryEnumCriteria).FirstOrDefault();
+                        workItem.Object[workItemClass, WorkItemProperties.Category].Value = workItemCategory.Id;
+                    }
+
 
                     // we are adding the initial Incident to this new WorkItem as related WorkItem (System.WorkItemRelatesToWorkItem)
 
