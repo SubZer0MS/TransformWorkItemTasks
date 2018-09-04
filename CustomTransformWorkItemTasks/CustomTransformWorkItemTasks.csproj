@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CustomTransformWorkItemTasks</RootNamespace>
     <AssemblyName>CustomTransformWorkItemTasks</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -33,16 +33,16 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.EnterpriseManagement.Core, Version=7.0.5000.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.EnterpriseManagement.Common">
+      <HintPath>References\Microsoft.EnterpriseManagement.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EnterpriseManagement.Core">
       <HintPath>References\Microsoft.EnterpriseManagement.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.EnterpriseManagement.Packaging, Version=7.0.5000.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.EnterpriseManagement.Packaging">
       <HintPath>References\Microsoft.EnterpriseManagement.Packaging.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.EnterpriseManagement.ServiceManager, Version=7.0.5000.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.EnterpriseManagement.ServiceManager">
       <HintPath>References\Microsoft.EnterpriseManagement.ServiceManager.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EnterpriseManagement.ServiceManager.Application.Common">
@@ -50,6 +50,9 @@
     </Reference>
     <Reference Include="Microsoft.EnterpriseManagement.UI.Core">
       <HintPath>References\Microsoft.EnterpriseManagement.UI.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EnterpriseManagement.UI.Extensions">
+      <HintPath>References\Microsoft.EnterpriseManagement.UI.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EnterpriseManagement.UI.FormsInfra">
       <HintPath>References\Microsoft.EnterpriseManagement.UI.FormsInfra.dll</HintPath>
